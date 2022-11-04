@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import {db} from '../Firebase'
+import {collection, addDoc, Timestamp} from 'firebase/firestore'
 import ReactDOM from 'react-dom';
-import firebase from '../Firebase';
 import { Link } from 'react-router-dom';
 class Create extends Component {
 constructor() {
 super();
-this.ref = firebase.firestore().collection('boards');
+this.ref = db.collection('kolekcja');
 this.state = {
 title: '',
 description: '',

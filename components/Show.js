@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import firebase from '../Firebase';
+import {db} from '../Firebase'
+import {collection, addDoc, Timestamp} from 'firebase/firestore'
 import { Link } from 'react-router-dom';
 class Show extends Component {
 constructor(props) {
@@ -10,7 +11,7 @@ key: ''
 };
 }
 componentDidMount() {
-const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
+const ref = db.collection('boards').doc(this.props.match.params.id);
 ref.get().then((doc) => {
 if (doc.exists) {
 this.setState({
@@ -24,7 +25,7 @@ console.log("No such document!");
 });
 }
 delete(id){
-firebase.firestore().collection('boards').doc(id).delete().then(() => {
+db.collection('boards').doc(id).delete().then(() => {
 console.log("Document successfully deleted!");
 this.props.history.push("/")
 }).catch((error) => {

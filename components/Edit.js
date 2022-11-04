@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import firebase from '../Firebase';
+import {db} from '../Firebase'
+import {collection, addDoc, Timestamp} from 'firebase/firestore'
 import { Link } from 'react-router-dom';
 class Edit extends Component {
 constructor(props) {
@@ -12,7 +13,7 @@ author: ''
 };
 }
 componentDidMount() {
-const ref = firebase.firestore().collection('boards').doc(this.props.match.params.id);
+const ref = db.collection('boards').doc(this.props.match.params.id);
 ref.get().then((doc) => {
 if (doc.exists) {
 const board = doc.data();
@@ -35,7 +36,7 @@ this.setState({board:state});
 onSubmit = (e) => {
 e.preventDefault();
 const { title, description, author } = this.state;
-const updateRef = firebase.firestore().collection('boards').doc(this.state.key);
+const updateRef = db.collection('boards').doc(this.state.key);
 updateRef.set({
 title,
 description,
